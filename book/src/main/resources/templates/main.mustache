@@ -5,6 +5,22 @@
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+    <style>
+        div.container {
+            width: auto;
+            overflow:hidden;
+            display:  table-cell;
+        }
+        div.box
+        {
+            white-space:nowrap;
+        }
+        div.box div
+        {
+            display:inline-block;
+            vertical-align: top;
+        }
+    </style>
 
 </head>
 <header>
@@ -24,31 +40,53 @@
 <div id="add"></div>
 <script type="text/babel" src="/js/main.js"></script>
 
-<div>
-    <table cellpadding="10">
-        <tr align="center" bgcolor="#deb887">
-            <th><h2>Книга</h2></th>
-            <th><h2>Автор</h2></th>
-            <th><h2>Жанр</h2></th>
-            <th><h2>Действие</h2></th>
-        </tr>
-        {{#books}}
-            <tr align="center" bgcolor="#e8e1bb">
-                <td>{{name}}</td>
-                <td>{{author}}</td>
-                <td>{{genre}}</td>
-            </tr>
-        {{/books}}
-    </table>
+<div class = "container">
+    <div class="box">
+
+        <div>
+            <table cellpadding="10">
+                <tr align="center" bgcolor="#deb887">
+                    <th><h2>Книга</h2></th>
+                    <th><h2>Автор</h2></th>
+                    <th><h2>Жанр</h2></th>
+                    <th><h2>Действие</h2></th>
+                </tr>
+                {{#books}}
+                    <tr align="center" bgcolor="#e8e1bb">
+                        <td>{{name}}</td>
+                        <td>{{author}}</td>
+                        <td>{{genre}}</td>
+                    </tr>
+                {{/books}}
+            </table>
+        </div>
+
+        <div>
+            <form method="post" action="filter">
+
+                <p><input type="text" name="author" placeholder="Введите автора" /> </p>
+                <p>
+                    <select name="genre">
+                        <option></option>
+                        {{#genres}}
+                            <option>{{.}}</option>
+                        {{/genres}}
+                    </select>
+                </p>
+                <p><button type="submit">Найти</button></p>
+            </form>
+        </div>
+
+    </div>
 </div>
-<div>
-    <form method="post" action="filter">
-        <select name="genre">
-            {{#genres}}
-                <option>{{.}}</option>
-            {{/genres}}
-        </select>
-        <button type="submit">Найти</button>
+
+<div id="addBook">
+    <form method = "post">
+        <p><input type = "text" name = "name" placeholder="Введите название"/></p>
+        <p><input type = "text" name = "genre" placeholder="Введите жанр"/></p>
+        <p><input type = "text" name = "author" placeholder="Введите автора"/></p>
+        <button type="submit">Добавить</button>
+        <button type="cancel">Отмена</button>
     </form>
 </div>
 

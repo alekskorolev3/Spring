@@ -49,9 +49,9 @@ public class BookController {
         Iterable<Book> books;
         Iterable<String> genres;
         genres = bookRepository.findAllGenres();
-        if (author != null)
+        if (!author.isEmpty())
         {
-            if (genre != null)
+            if (!genre.isEmpty())
             {
                 books = bookRepository.findByAuthorAndGenre(author, genre);
             }
@@ -62,7 +62,7 @@ public class BookController {
         }
         else
         {
-            if (genre != null)
+            if (!genre.isEmpty())
             {
                 books = bookRepository.findByGenre(genre);
             }
@@ -70,6 +70,7 @@ public class BookController {
             {
                 books = bookRepository.findAll();
             }
+
         }
         model.put("books", books);
         model.put ("genres", genres);
