@@ -25,13 +25,15 @@
 </head>
 <header>
     <div align="center"><h3>
-        <nav>
-            <a type = "main">Домой</a> |
-            <a type = "Books">Книги</a> |
-            <a type = "authors">Авторы</a> |
-            <a type = "genres">Жанры</a> |
-            <a type = "all">Книги/авторы/жанры</a>
-        </nav>
+        <form method="post" action="nav">
+            <nav>
+                <a href = "../">Домой</a> |
+                <a type = "books">Книги</a> |
+                <a type = "authors">Авторы</a> |
+                <a type = "genres">Жанры</a> |
+                <a type = "all">Книги/авторы/жанры</a>
+            </nav>
+        </form>
     </h3></div>
 </header>
 <body>
@@ -56,6 +58,9 @@
                         <td>{{name}}</td>
                         <td>{{author}}</td>
                         <td>{{genre}}</td>
+                        <td>
+                            <div id="edit"></div>
+                        </td>
                     </tr>
                 {{/books}}
             </table>
@@ -64,10 +69,10 @@
         <div>
             <form method="post" action="filter">
 
-                <p><input type="text" name="author" placeholder="Введите автора" /> </p>
+                <p><input type="text" name="author" placeholder="Фамилия автора" /> </p>
                 <p>
                     <select name="genre">
-                        <option></option>
+                        <option disabled selected>Жанр книги</option>
                         {{#genres}}
                             <option>{{.}}</option>
                         {{/genres}}
