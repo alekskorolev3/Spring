@@ -27,7 +27,7 @@ public class BookController {
         model.put("genres", genres);
         return "main";
     }
-    @PostMapping
+    @PostMapping("add")
     public String add(@RequestParam String name, @RequestParam String author, @RequestParam String genre, Map<String, Object> model)
     {
         Book book = new Book(name, author, genre);
@@ -36,13 +36,7 @@ public class BookController {
         model.put("books", books);
         return "main";
     }
-    @PostMapping("Books")
-    public String books(Map<String, Object> model)
-    {
-        Iterable<Book> books = bookRepository.findAll();
-        model.put("books", books);
-        return "main";
-    }
+
     @PostMapping("filter")
     public String filter(@RequestParam (required = false)String author, @RequestParam (required = false)String genre, Map<String, Object> model)
     {
@@ -74,6 +68,24 @@ public class BookController {
         }
         model.put("books", books);
         model.put ("genres", genres);
+        return "main";
+    }
+
+    @PostMapping ("edit")
+    public String editBook(@RequestParam String name, @RequestParam String author,
+                           @RequestParam (required = false)String edit, @RequestParam (required = false)String remove,
+                           @RequestParam String genre, Map<String, Object> model)
+    {
+        if (!edit.isEmpty())
+        {
+            Book b = new Book (name, author, genre);
+            b = bookRepository.findBook(name, author, genre);
+            return "main";
+        }
+        if (!remove.isEmpty())
+        {
+            return "main";
+        }
         return "main";
     }
 }

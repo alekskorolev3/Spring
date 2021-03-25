@@ -2,9 +2,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
     <style>
         div.container {
             width: auto;
@@ -21,7 +18,9 @@
             vertical-align: top;
         }
     </style>
-
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
 </head>
 <header>
     <div align="center"><h3>
@@ -39,8 +38,9 @@
 <body>
 
 <div id="root"></div>
+
 <div id="add"></div>
-<script type="text/babel" src="/js/main.js"></script>
+<script type="text/babel" src="/js/app.js"></script>
 
 <div class = "container">
     <div class="box">
@@ -86,7 +86,7 @@
 </div>
 
 <div id="addBook">
-    <form method = "post">
+    <form method = "post" action="add">
         <p><input type = "text" name = "name" placeholder="Введите название"/></p>
         <p><input type = "text" name = "genre" placeholder="Введите жанр"/></p>
         <p><input type = "text" name = "author" placeholder="Введите автора"/></p>
@@ -94,6 +94,19 @@
         <button type="cancel">Отмена</button>
     </form>
 </div>
+
+
+<div>
+    <form method="post" action="edit">
+        <p><input type = "text" name = "name" placeholder="Введите название"/></p>
+        <p><input type = "text" name = "genre" placeholder="Введите жанр"/></p>
+        <p><input type = "text" name = "author" placeholder="Введите автора"/></p>
+        <button type="submit" name="edit">Редактировать</button>
+        <button type="submit" name="remove">Удалить</button>
+    </form>
+
+</div>
+
 
 </body>
 </html>
