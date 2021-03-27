@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 import java.util.List;
+import java.text.*;
 
 @Controller
 public class BookController {
@@ -41,8 +42,9 @@ public class BookController {
     public String filter(@RequestParam (required = false)String author, @RequestParam (required = false)String genre, Map<String, Object> model)
     {
         Iterable<Book> books;
-        Iterable<String> genres;
-        genres = bookRepository.findAllGenres();
+        Iterable<String> genres = bookRepository.findAllGenres();
+        Iterable<String> authors = bookRepository.findAllByAuthor();
+
         if (!author.isEmpty())
         {
             if (!genre.isEmpty())
@@ -67,25 +69,9 @@ public class BookController {
 
         }
         model.put("books", books);
-        model.put ("genres", genres);
+        model.put("genres", genres);
+        model.put("authors", authors);
         return "main";
     }
 
-    @PostMapping ("edit")
-    public String editBook(@RequestParam String name, @RequestParam String author,
-                           @RequestParam (required = false)String edit, @RequestParam (required = false)String remove,
-                           @RequestParam String genre, Map<String, Object> model)
-    {
-        if (!edit.isEmpty())
-        {
-            Book b = new Book (name, author, genre);
-            b = bookRepository.findBook(name, author, genre);
-            return "main";
-        }
-        if (!remove.isEmpty())
-        {
-            return "main";
-        }
-        return "main";
-    }
 }

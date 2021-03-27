@@ -69,7 +69,14 @@
         <div>
             <form method="post" action="filter">
 
-                <p><input type="text" name="author" placeholder="Фамилия автора" /> </p>
+                <p>
+                    <select name="author">
+                        <option disabled selected>Фамилия автора</option>
+                        {{#authors}}
+                            <option>{{.}}</option>
+                        {{/authors}}
+                    </select>
+                </p>
                 <p>
                     <select name="genre">
                         <option disabled selected>Жанр книги</option>
