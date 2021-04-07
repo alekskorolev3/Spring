@@ -79,14 +79,30 @@ public class BookController {
         model.put("books", books);
         return "main";
     }
-
+*/
     @PostMapping("edit")
-    public String edit(@RequestParam int id, Map<String, Object> model)
+    public String edit(@RequestParam Long id, Model model)
     {
-        Book b = bookAuthorRepository.findBookById(id);
-        model.put("books", b);
-
+        Book book = bookRepository.findBookById(id);
+        List<Author> authors = authorRepository.findAll();
+        model.addAttribute("editBook", book);
+        model.addAttribute("authors", authors);
         return "main";
-    }*/
+    }
+    @PostMapping("edit1")
+    public String edit1(@RequestParam Long id, @RequestParam String name, @RequestParam(value = "author[]") List<String> authorNames,
+                      @RequestParam String genre)
+    {
+        Book book = bookRepository.findBookById(id);
+
+        book.setName(name);
+        book.setGenre(genre);
+        List<Author> authors;
+        authors = authorRepository.findAuthorsByNameIn(authorNames);
+        book.setAuthors(authors);
+
+        bookRepository.save(book);
+        return "redirect:/";
+    }
 
 }
