@@ -1,7 +1,9 @@
 
 //import { Button } from './button.js';
+import ReactMustache from 'react-mustache';
 var countOfAddClicks = 0;
 var countOfEditClicks = 0;
+<ReactMustache template="{{authors}}"/>
 class AddBlock extends React.Component
 {
     render()
@@ -11,7 +13,12 @@ class AddBlock extends React.Component
                 <form method = "post" action="add">
                     <p><input type = "text" name = "name" placeholder="Введите название" /></p>
                     <p><input type = "text" name = "genre" placeholder="Введите жанр" /></p>
-                    <p><input type = "text" name = "author" placeholder="Введите автора" /></p>
+                    <p><select multiple name="author[]">
+                            {{#authors}}
+                            <option>{{name}}</option>
+                            {{/authors}}
+                       </select>
+                    </p>
                     <button type="submit">Добавить</button>
                     <button type="cancel">Отмена</button>
                 </form>
@@ -79,7 +86,7 @@ class EButton extends React.Component
     render()
     {
         return(
-            <button onClick={this.props.onClick}>Редакт./Удалить</button>
+            <button onClick={this.props.onClick} name="{{id}}">Редакт./Удалить</button>
         );
     }
 }
@@ -112,6 +119,7 @@ ReactDOM.render(
     <AddButton />,
     document.getElementById('root')
 );
+
 ReactDOM.render(
     <EditButton />,
     document.getElementById('edit')

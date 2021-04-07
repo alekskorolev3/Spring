@@ -56,13 +56,14 @@
                 {{#books}}
                     <tr align="center" bgcolor="#e8e1bb">
                         <td>{{name}}</td>
-                        <td>{{#authors}}<p>{{name}}</p>{{/authors}}</td>
+                        <td>{{author}}</td>
                         <td>{{genre}}</td>
-                        <td>
-                            <form method="post" action="/edit">
-                                <div id="edit"></div>
-                            </form>
-                        </td>
+                        <form method="post" action="edit">
+                            <td>
+                                <button id="{{id}}" type="submit">Редакт./Удалить</button>
+                            </td>
+                        </form>
+
                     </tr>
                 {{/books}}
             </table>
@@ -75,7 +76,7 @@
                     <select name="author">
                         <option disabled selected>Фамилия автора</option>
                         {{#authors}}
-                            <option>{{name}}</option>
+                            <option>{{.}}</option>
                         {{/authors}}
                     </select>
                 </p>
@@ -95,20 +96,6 @@
 </div>
 
 <div id="add"></div>
-<div id="addBook">
-    <form method = "post" action="add">
-        <p><input type = "text" name = "name" placeholder="Введите название" /></p>
-        <p><input type = "text" name = "genre" placeholder="Введите жанр" /></p>
-        <p><select multiple name="author[]">
-            {{#authors}}
-                <option>{{name}}</option>
-            {{/authors}}
-        </select>
-        </p>
-        <button type="submit">Добавить</button>
-        <button type="cancel">Отмена</button>
-    </form>
-</div>
 
 </body>
 </html>

@@ -1,77 +1,92 @@
 package com.book.book;
-
+import com.book.book.domain.Author;
 import com.book.book.domain.Book;
+import com.book.book.repository.AuthorRepository;
 import com.book.book.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import java.util.Map;
-import java.util.List;
-import java.text.*;
+import java.util.*;
 
 @Controller
 public class BookController {
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
+
     @GetMapping
-    public String getBooks(@RequestParam(required = false) String genre, @RequestParam (required = false) String author, Map<String, Object> model)
+    public String getBooks(Model model)
     {
-
         Iterable<Book> books;
-        Iterable<String> genres;
+        Iterable<Author> authors;
+
         books = bookRepository.findAll();
-        genres = bookRepository.findAllGenres();
+        authors = authorRepository.findAll();
+        model.addAttribute("books", books);
+        model.addAttribute("authors", authors);
 
-        model.put("books", books);
-        model.put("genres", genres);
         return "main";
     }
+
     @PostMapping("add")
-    public String add(@RequestParam String name, @RequestParam String author, @RequestParam String genre, Map<String, Object> model)
+    public String add(@RequestParam String name, @RequestParam(value = "author[]") List<String> authorNames,
+                      @RequestParam String genre)
     {
-        Book book = new Book(name, author, genre);
-        bookRepository.save(book);
-        Iterable<Book> books = bookRepository.findAll();
-        model.put("books", books);
-        return "main";
-    }
+        Book book = new Book(name, genre);
 
-    @PostMapping("filter")
+        List<Author> authors;
+
+        authors = authorRepository.findAuthorsByNameIn(authorNames);
+        book.setAuthors(authors);
+        bookRepository.save(book);
+
+        return "redirect:/";
+    }
+/*
+    @GetMapping("filter")
     public String filter(@RequestParam (required = false)String author, @RequestParam (required = false)String genre, Map<String, Object> model)
     {
         Iterable<Book> books;
-        Iterable<String> genres = bookRepository.findAllGenres();
-        Iterable<String> authors = bookRepository.findAllByAuthor();
 
-        if (!author.isEmpty())
+        if (author != null)
         {
-            if (!genre.isEmpty())
+            if (genre != null)
             {
-                books = bookRepository.findByAuthorAndGenre(author, genre);
+                books = bookAuthorRepository.findByAuthorAndGenre(author, genre);
             }
             else
             {
-                books = bookRepository.findByAuthor(author);
+                books = bookAuthorRepository.findByAuthor(author);
             }
         }
         else
         {
-            if (!genre.isEmpty())
+            if (genre != null)
             {
-                books = bookRepository.findByGenre(genre);
+                books = bookAuthorRepository.findByGenre(genre);
             }
             else
             {
-                books = bookRepository.findAll();
+                books = bookAuthorRepository.findAll();
             }
 
         }
         model.put("books", books);
-        model.put("genres", genres);
-        model.put("authors", authors);
         return "main";
     }
+
+    @PostMapping("edit")
+    public String edit(@RequestParam int id, Map<String, Object> model)
+    {
+        Book b = bookAuthorRepository.findBookById(id);
+        model.put("books", b);
+
+        return "main";
+    }*/
 
 }

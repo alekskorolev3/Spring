@@ -1,52 +1,55 @@
 package com.book.book.domain;
+import org.hibernate.annotations.Table;
+import javax.persistence.*;
+import java.util.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity // This tells Hibernate to make a table out of this class
+@Entity
+@Table(appliesTo = "book")
 public class Book {
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id",unique=true, nullable = false)
+    private Long id;
+
+    @Column(name = "name")
     private String name;
-    private String author;
+
+    @Column(name="genre")
     private String genre;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="author_book",
+            joinColumns = {@JoinColumn(name="book_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name="author_id", referencedColumnName="id")}
+    )
+    private List<Author> authors;
 
     public Book() {
 
     }
 
-    public Book(String name, String author, String genre) {
+    public Book(String name, String genre)
+    {
         this.name = name;
-        this.author = author;
-        this.genre=genre;
+        this.genre = genre;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String text) {
-        this.name = text;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String tag) {
-        this.author = tag;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getGenre() {
@@ -56,4 +59,15 @@ public class Book {
     public void setGenre(String genre) {
         this.genre = genre;
     }
+
+
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
 }
