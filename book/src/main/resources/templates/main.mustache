@@ -70,22 +70,22 @@
         </div>
 
         <div>
-            <form method="post" action="filter">
+            <form method="get" action="filter">
 
                 <p>
                     <select name="author">
                         <option disabled selected>Фамилия автора</option>
-                        {{#authors}}
-                            <option>{{name}}</option>
-                        {{/authors}}
+                        {{#books}}
+                            {{#authors}}<option>{{name}}</option>{{/authors}}
+                        {{/books}}
                     </select>
                 </p>
                 <p>
                     <select name="genre">
                         <option disabled selected>Жанр книги</option>
-                        {{#genres}}
-                            <option>{{.}}</option>
-                        {{/genres}}
+                        {{#books}}
+                            <option>{{genre}}</option>
+                        {{/books}}
                     </select>
                 </p>
                 <p><button type="submit">Найти</button></p>
@@ -96,36 +96,45 @@
 </div>
 
 <div id="add"></div>
-<div id="addBook">
-    <form method = "post" action="add">
-        <p><input type = "text" name = "name" placeholder="Введите название" /></p>
-        <p><input type = "text" name = "genre" placeholder="Введите жанр" /></p>
-        <p><select multiple name="author[]">
-            {{#authors}}
-                <option>{{name}}</option>
-            {{/authors}}
-        </select>
-        </p>
-        <button type="submit">Добавить</button>
-        <button type="cancel">Отмена</button>
-    </form>
-</div>
+<details>
+    <summary>Создать</summary>
+    <div id="addBook">
+        <form method = "post" action="add">
+            <p><input type = "text" name = "name" placeholder="Введите название" /></p>
+            <p><input type = "text" name = "genre" placeholder="Введите жанр" /></p>
+            <p><select multiple name="author[]">
+                {{#authors}}
+                    <option>{{name}}</option>
+                {{/authors}}
+            </select>
+            </p>
+            <button type="submit">Добавить</button>
+            <button type="cancel">Отмена</button>
+        </form>
+    </div>
+</details>
+{{#editBook}}
+    <details>
+        <summary>Редактировать</summary>
+        <div>
+            <form method = "post" action="edit1">
+                <input type="hidden" name="id" value="{{editBook.id}}"/>
+                <p><input type = "text" name = "name" value = "{{editBook.name}}" /></p>
+                <p><input type = "text" name = "genre" value = "{{editBook.genre}}" /></p>
+                <p><select multiple name="author[]">
+                    {{#authors}}
+                        <option>{{name}}</option>
+                    {{/authors}}
+                </select>
+                </p>
+                <button type="submit">Добавить</button>
+                <button formaction="delete">Удалить</button>
+            </form>
+        </div>
+    </details>
+{{/editBook}}
 
-<div>
-    <form method = "post" action="edit1">
-        <input type="hidden" name="id" value="{{editBook.id}}"/>
-        <p><input type = "text" name = "name" value = "{{editBook.name}}" /></p>
-        <p><input type = "text" name = "genre" value = "{{editBook.genre}}" /></p>
-        <p><select multiple name="author[]">
-            {{#authors}}
-                <option>{{name}}</option>
-            {{/authors}}
-        </select>
-        </p>
-        <button type="submit">Добавить</button>
-        <button type="cancel">Отмена</button>
-    </form>
-</div>
+
 
 </body>
 </html>

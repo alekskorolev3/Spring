@@ -1,4 +1,5 @@
 package com.book.book.domain;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Table;
 import javax.persistence.*;
 import java.util.*;

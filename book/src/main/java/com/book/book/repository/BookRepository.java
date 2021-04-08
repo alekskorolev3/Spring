@@ -7,4 +7,7 @@ public interface BookRepository extends CrudRepository<Book, Long>{
 
     List<Book> findAll();
     Book findBookById(Long id);
+
+    List<Book> findBooksByGenre(String genre);
+
 }
