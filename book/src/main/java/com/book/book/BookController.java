@@ -37,11 +37,13 @@ public class BookController {
         }
         Iterable<Book> books;
         Iterable<Author> authors;
-
+        Iterable<String> genres;
         books = bookRepository.findAll();
         authors = authorRepository.findAll();
+        genres = bookRepository.findGenres();
         model.addAttribute("books", books);
         model.addAttribute("authors", authors);
+        model.addAttribute("genres", genres);
 
         return "main";
     }
@@ -130,6 +132,12 @@ public class BookController {
 
         bookRepository.delete(book);
         return "redirect:/";
+    }
+
+    @GetMapping("author")
+    public String author()
+    {
+        return "author";
     }
 
 }

@@ -28,7 +28,7 @@
             <nav>
                 <a href = "../">Домой</a> |
                 <a type = "books">Книги</a> |
-                <a type = "authors">Авторы</a> |
+                <a href = "author">Авторы</a> |
                 <a type = "genres">Жанры</a> |
                 <a type = "all">Книги/авторы/жанры</a>
             </nav>
@@ -75,17 +75,17 @@
                 <p>
                     <select name="author">
                         <option disabled selected>Фамилия автора</option>
-                        {{#books}}
+
                             {{#authors}}<option>{{name}}</option>{{/authors}}
-                        {{/books}}
+
                     </select>
                 </p>
                 <p>
                     <select name="genre">
                         <option disabled selected>Жанр книги</option>
-                        {{#books}}
-                            <option>{{genre}}</option>
-                        {{/books}}
+                        {{#genres}}
+                            <option>{{.}}</option>
+                        {{/genres}}
                     </select>
                 </p>
                 <p><button type="submit">Найти</button></p>
