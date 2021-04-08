@@ -27,24 +27,17 @@ public class BookController {
     @GetMapping
     public String getBooks(Model model, @RequestParam (required = false)List<Book> filterBook)
     {
+        Iterable<Book> books = bookRepository.findAll();
+        Iterable<Author> authors = authorRepository.findAll();
+        Iterable<String> genres = bookRepository.findGenres();
+        model.addAttribute("authors", authors);
+        model.addAttribute("genres", genres);
         if (filterBook != null)
         {
             model.addAttribute("books", filterBook);
-            Iterable<Author> authors;
-            authors = authorRepository.findAll();
-            model.addAttribute("authors", authors);
             return "main";
         }
-        Iterable<Book> books;
-        Iterable<Author> authors;
-        Iterable<String> genres;
-        books = bookRepository.findAll();
-        authors = authorRepository.findAll();
-        genres = bookRepository.findGenres();
         model.addAttribute("books", books);
-        model.addAttribute("authors", authors);
-        model.addAttribute("genres", genres);
-
         return "main";
     }
 
@@ -53,10 +46,7 @@ public class BookController {
                       @RequestParam String genre)
     {
         Book book = new Book(name, genre);
-
-        List<Author> authors;
-
-        authors = authorRepository.findAuthorsByNameIn(authorNames);
+        List<Author> authors = authorRepository.findAuthorsByNameIn(authorNames);
         book.setAuthors(authors);
         bookRepository.save(book);
 
@@ -65,19 +55,21 @@ public class BookController {
 
     @GetMapping("filter")
     public String filter(@RequestParam (required = false)String author,
-                         @RequestParam (required = false)String genre, Model model,
-                         RedirectAttributes redirectAttributes)
+                         @RequestParam (required = false)String genre, Model model)
     {
         List<Book> books;
+        List<Author> authorsNames = new ArrayList<>();
+        Author authorName = authorRepository.findAuthorByName(author);
+        authorsNames.add(authorName);
         if (author != null)
         {
             if (genre != null)
             {
-                books = bookRepository.findAll();
+                books = bookRepository.findBooksByAuthorsInAndGenre(authorsNames, genre);
             }
             else
             {
-                books = bookRepository.findAll();
+                books = bookRepository.findBooksByAuthorsIn(authorsNames);
             }
         }
         else
@@ -92,8 +84,10 @@ public class BookController {
             }
         }
         Iterable<Author> authors = authorRepository.findAll();
+        Iterable<String> genres = bookRepository.findGenres();
         model.addAttribute("books", books);
         model.addAttribute("authors", authors);
+        model.addAttribute("genres", genres);
         return "main";
     }
     @PostMapping("edit")

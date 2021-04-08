@@ -1,4 +1,5 @@
 package com.book.book.repository;
+import com.book.book.domain.Author;
 import com.book.book.domain.Book;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,6 +11,9 @@ public interface BookRepository extends CrudRepository<Book, Long>{
 
     List<Book> findBooksByGenre(String genre);
 
+    List<Book> findBooksByAuthorsIn(List<Author> author);
+
+    List<Book> findBooksByAuthorsInAndGenre(List<Author> author, String genre);
     @Query("select distinct b.genre from Book b")
     List<String> findGenres();
 }
