@@ -11,6 +11,21 @@
             background-color: #f4f4f4;
         }
 
+        .add-block
+        {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .edit-block
+        {
+            text-align: center;
+        }
+        .box
+        {
+            text-align: center;
+        }
         div.container {
             overflow:hidden;
         }
@@ -20,6 +35,7 @@
         }
         div.box div
         {
+            margin: 10px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -33,7 +49,7 @@
 
         .topnav {
             font-family: 'Noto Sans', sans-serif;
-            background-color: #8ac858;
+            background-color: #3a547f;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -46,7 +62,7 @@
             font-family: 'Noto Sans', sans-serif;
             font-weight: bold;
             float: left;
-            color: #d8ffbc;
+            color: white;
             align-items: center;
             padding: 14px 16px;
             text-decoration: none;
@@ -57,9 +73,8 @@
 
         .topnav a:hover {
 
-            background-color: burlywood;
             color: white;
-            margin-top: 140px;
+            background-color: #4b687f;
         }
 
         .header-panel
@@ -69,8 +84,89 @@
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
-    </style>
+        .wrapper-fb
+        {
+            background-color: white;
+            border: 1px solid #e9e9e9;
+        }
+        .wrapper-tb
+        {
+            background-color: white;
+            border: 1px solid #e9e9e9;
+        }
 
+        .button
+        {
+            background-color: #3a547f;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 5px 14px;
+            text-align: center;
+            text-decoration: none;
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 14px;
+        }
+        input
+        {
+            display: block;
+            font-size: 14px;
+            font-family: 'Roboto', sans-serif;
+            color: #444;
+            padding: 6px 14px;
+            width: auto;
+            max-width: 100%;
+            box-sizing: border-box;
+            margin: 0;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+
+        }
+        select {
+            display: block;
+            font-size: 14px;
+            font-family: 'Roboto', sans-serif;
+            color: #444;
+            padding: 5px 14px;
+            max-width: 100%;
+            box-sizing: border-box;
+            margin: 0;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+        select::-ms-expand { display: none; }
+        select:hover { border-color: #888; }
+        select:focus { border-color: #aaa;
+            color: #222;
+            outline: none;
+        }
+        select option { font-weight:normal; }
+        *[dir="rtl"] select, :root:lang(ar) select, :root:lang(iw) select {
+            background-position: left .7em top 50%, 0 0;
+            padding: .6em .8em .5em 1.4em;
+        }
+        .main-table, tr, th, td
+        {
+            border: 1px solid #f4f4f4;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+        .text-fb, th
+        {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+        }
+        td
+        {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+        }
+
+        .wrapper-tb div
+        {
+            margin: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -83,101 +179,104 @@
         <a href = "all">Книги/авторы/жанры</a>
     </div>
 </div>
-<div id="root"></div>
-
-
-<script type="text/babel" src="/js/app.js"></script>
 
 <div class = "container">
     <div class="box">
-        <div class="table-box">
-            <table cellpadding="10">
-                <tr align="center" bgcolor="#deb887">
-                    <th><h2>Книга</h2></th>
-                    <th><h2>Автор</h2></th>
-                    <th><h2>Жанр</h2></th>
-                    <th><h2>Действие</h2></th>
-                </tr>
-                {{#books}}
-                    <tr align="center" bgcolor="#e8e1bb">
-                        <td>{{name}}</td>
-                        <td>{{#authors}}<p>{{name}}</p>{{/authors}}</td>
-                        <td>{{genre}}</td>
-                        <td>
-                            <form method="post" action="/edit">
-                                <input type="hidden" name="id" value="{{id}}"/>
-                                <button type="submit">Редакт./Удалить</button>
-                            </form>
-                        </td>
+        <div class="wrapper-tb">
+            <div class="table-box">
+                <table class="main-table">
+                    <tr align="center">
+                        <th>Книга</th>
+                        <th>Автор</th>
+                        <th>Жанр</th>
+                        <th>Действие</th>
                     </tr>
-                {{/books}}
-            </table>
+                    {{#books}}
+                        <tr align="center">
+                            <td>{{name}}</td>
+                            <td>{{#authors}}<p>{{name}}</p>{{/authors}}</td>
+                            <td>{{genre}}</td>
+                            <td>
+                                <form method="post" action="/edit">
+                                    <input type="hidden" name="id" value="{{id}}"/>
+                                    <button class="button" type="submit">Редакт./Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {{/books}}
+                </table>
+            </div>
         </div>
-
-        <div class="filter-box">
-            <form method="get" action="filter">
-
-                <p>
-                    <select name="author">
-                        <option disabled selected>Фамилия автора</option>
-
+        <div class="wrapper-fb">
+            <div class="filter-box">
+                <form method="get" action="filter">
+                    <div class="text-fb">Фильтры:</div>
+                    <p>
+                        <select name="author">
+                            <option disabled selected>Автор</option>
                             {{#authors}}<option>{{name}}</option>{{/authors}}
+                        </select>
+                    </p>
+                    <p>
+                        <select name="genre">
+                            <option disabled selected>Жанр книги</option>
+                            {{#genres}}
+                                <option>{{.}}</option>
+                            {{/genres}}
+                        </select>
+                    </p>
+                    <p><button class="button" type="submit">Найти</button></p>
+                </form>
+            </div>
 
-                    </select>
-                </p>
-                <p>
-                    <select name="genre">
-                        <option disabled selected>Жанр книги</option>
-                        {{#genres}}
-                            <option>{{.}}</option>
-                        {{/genres}}
-                    </select>
-                </p>
-                <p><button type="submit">Найти</button></p>
-            </form>
         </div>
-
     </div>
 </div>
 
-<div id="add"></div>
-<details>
-    <summary>Создать</summary>
-    <div id="addBook">
-        <form method = "post" action="add">
-            <p><input type = "text" name = "name" placeholder="Введите название" /></p>
-            <p><input type = "text" name = "genre" placeholder="Введите жанр" /></p>
-            <p><select multiple name="author[]">
-                {{#authors}}
-                    <option>{{name}}</option>
-                {{/authors}}
-            </select>
-            </p>
-            <button type="submit">Добавить</button>
-        </form>
-    </div>
-</details>
-{{#editBook}}
-    <details>
-        <summary>Редактировать</summary>
-        <div>
-            <form method = "post" action="edit1">
-                <input type="hidden" name="id" value="{{editBook.id}}"/>
-                <p><input type = "text" name = "name" value = "{{editBook.name}}" /></p>
-                <p><input type = "text" name = "genre" value = "{{editBook.genre}}" /></p>
-                <p><select multiple name="author[]">
-                    {{#author}}
-                        <option>{{name}}</option>
-                    {{/author}}
-                </select>
-                </p>
-                <button type="submit">Добавить</button>
-                <button formaction="delete">Удалить</button>
-            </form>
+<div class = "container">
+    <div class="box">
+        <div class="add-block">
+            <div class="wrapper-tb">
+                <div class="text-fb">Создать книгу:</div>
+                <div>
+                    <form method = "post" action="add">
+                        <p><input type = "text" name = "name" placeholder="Введите название" /></p>
+                        <p><input type = "text" name = "genre" placeholder="Введите жанр" /></p>
+                        <p><select multiple name="author[]">
+                            {{#authors}}
+                                <option>{{name}}</option>
+                            {{/authors}}
+                        </select>
+                        </p>
+                        <button class="button" type="submit">Добавить</button>
+                    </form>
+                </div>
+            </div>
         </div>
-    </details>
-{{/editBook}}
-
+        <div class="edit-block">
+            {{#editBook}}
+                <div class="wrapper-tb">
+                    <div>
+                        <form method = "post" action="edit1">
+                            <input type="hidden" name="id" value="{{editBook.id}}"/>
+                            <p><input type = "text" name = "name" value = "{{editBook.name}}" /></p>
+                            <p><input type = "text" name = "genre" value = "{{editBook.genre}}" /></p>
+                            <p><select multiple name="author[]">
+                                <option disabled selected>Автор</option>
+                                {{#author}}
+                                    <option>{{name}}</option>
+                                {{/author}}
+                            </select>
+                            </p>
+                            <button class="button" type="submit">Добавить</button>
+                            <button class="button" formaction="delete">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+            {{/editBook}}
+        </div>
+    </div>
+</div>
 
 
 </body>

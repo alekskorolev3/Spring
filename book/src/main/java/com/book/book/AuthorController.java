@@ -42,13 +42,13 @@ public class AuthorController {
         Author author = authorRepository.findAuthorById(id);
         author.setName(name);
         authorRepository.save(author);
-        return "redirect:/authors";
+        return "redirect:/author";
     }
     @PostMapping("deleteAuthor")
     public String deleteAuthor(@RequestParam Long id)
     {
         Author author = authorRepository.findAuthorById(id);
         authorRepository.delete(author);
-        return "redirect:/authors";
+        return "redirect:/author";
     }
 }
