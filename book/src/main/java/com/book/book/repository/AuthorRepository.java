@@ -8,6 +8,6 @@ public interface AuthorRepository extends CrudRepository<Author, Long>{
 
     List<Author> findAll();
     Author findAuthorByName(String name);
-
+    Author findAuthorById(Long id);
     List<Author> findAuthorsByNameIn(List<String> authorNames);
 }

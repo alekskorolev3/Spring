@@ -1,0 +1,38 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        nav
+        {
+            text-align: center;
+        }
+    </style>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<header>
+    <nav>
+        <h3>
+            <a href = "../">Домой</a> |
+            <a href = "books">Книги</a> |
+            <a href = "author">Авторы</a> |
+            <a href = "genres">Жанры</a> |
+            <a href = "all">Книги/авторы/жанры</a>
+        </h3>
+    </nav>
+</header>
+<body>
+<table>
+    <tr>
+        <th>Книги</th>
+    </tr>
+    {{#books}}
+        <tr>
+            <td>{{name}}</td>
+        </tr>
+    {{/books}}
+</table>
+</body>
+</html>

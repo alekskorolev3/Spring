@@ -1,12 +1,18 @@
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+        body
+        {
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
         div.container {
-            width: auto;
             overflow:hidden;
-            display:  table-cell;
         }
         div.box
         {
@@ -14,29 +20,69 @@
         }
         div.box div
         {
-            display:inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             vertical-align: top;
+            text-align: justify;
         }
-    </style>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
-</head>
-<header>
-    <div align="center"><h3>
-        <form method="post" action="nav">
-            <nav>
-                <a href = "../">Домой</a> |
-                <a type = "books">Книги</a> |
-                <a href = "author">Авторы</a> |
-                <a type = "genres">Жанры</a> |
-                <a type = "all">Книги/авторы/жанры</a>
-            </nav>
-        </form>
-    </h3></div>
-</header>
-<body>
+        .table-box
+        {
+            text-align: justify;
+        }
 
+        .topnav {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: #8ac858;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 64px;
+            position: relative;
+        }
+
+        .topnav a {
+            font-family: 'Noto Sans', sans-serif;
+            font-weight: bold;
+            float: left;
+            color: #d8ffbc;
+            align-items: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 15px;
+            height: 64px;
+            padding-top: 60px;
+        }
+
+        .topnav a:hover {
+
+            background-color: burlywood;
+            color: white;
+            margin-top: 140px;
+        }
+
+        .header-panel
+        {
+            background-color: #3a547f;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+    </style>
+
+</head>
+
+<body>
+<div class="header-panel">
+    <div class="topnav">
+        <a class ="active" href = "../">Домой</a>
+        <a href = "books">Книги</a>
+        <a href = "author">Авторы</a>
+        <a href = "genres">Жанры</a>
+        <a href = "all">Книги/авторы/жанры</a>
+    </div>
+</div>
 <div id="root"></div>
 
 
@@ -44,8 +90,7 @@
 
 <div class = "container">
     <div class="box">
-
-        <div>
+        <div class="table-box">
             <table cellpadding="10">
                 <tr align="center" bgcolor="#deb887">
                     <th><h2>Книга</h2></th>
@@ -69,7 +114,7 @@
             </table>
         </div>
 
-        <div>
+        <div class="filter-box">
             <form method="get" action="filter">
 
                 <p>
@@ -109,7 +154,6 @@
             </select>
             </p>
             <button type="submit">Добавить</button>
-            <button type="cancel">Отмена</button>
         </form>
     </div>
 </details>
@@ -122,9 +166,9 @@
                 <p><input type = "text" name = "name" value = "{{editBook.name}}" /></p>
                 <p><input type = "text" name = "genre" value = "{{editBook.genre}}" /></p>
                 <p><select multiple name="author[]">
-                    {{#authors}}
+                    {{#author}}
                         <option>{{name}}</option>
-                    {{/authors}}
+                    {{/author}}
                 </select>
                 </p>
                 <button type="submit">Добавить</button>

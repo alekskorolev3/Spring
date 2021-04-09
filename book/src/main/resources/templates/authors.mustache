@@ -1,0 +1,57 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        nav
+        {
+            text-align: center;
+        }
+    </style>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<header>
+    <nav>
+        <h3>
+            <a href = "../">Домой</a> |
+            <a href = "books">Книги</a> |
+            <a href = "author">Авторы</a> |
+            <a href = "genres">Жанры</a> |
+            <a href = "all">Книги/авторы/жанры</a>
+        </h3>
+    </nav>
+</header>
+<body>
+    <table>
+        <tr>
+            <th>Авторы</th>
+            <th>Действие</th>
+        </tr>
+        {{#authors}}
+        <tr>
+            <td>{{name}}</td>
+            <td>
+                <form method="post" action="editAuthor">
+                    <input type="hidden" name="id" value="{{id}}" formaction="editAuthor"/>
+                    <button type="submit">Редакт./Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {{/authors}}
+    </table>
+    <form method="post" action="addAuthor">
+        <label><input name="name" placeholder="Введите название"></label>
+        <button type="submit">Добавить</button>
+    </form>
+    {{#authorName}}
+    <form method="post" action="editAuthor1">
+        <label><input type="hidden" name="id" value="{{authorName.id}}"/></label>
+        <label><input type="text" name="name" placeholder="Введите название" value="{{authorName.name}}"></label>
+        <button type="submit">Редактировать</button>
+        <button formaction="deleteAuthor">Удалить</button>
+    </form>
+    {{/authorName}}
+</body>
+</html>
