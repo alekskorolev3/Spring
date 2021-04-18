@@ -4,14 +4,14 @@ import com.book.book.domain.Book;
 import com.book.book.repository.AuthorRepository;
 import com.book.book.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
 public class MainController {
     @Autowired
     private BookRepository bookRepository;
@@ -19,106 +19,87 @@ public class MainController {
     @Autowired
     private AuthorRepository authorRepository;
 
-    @GetMapping
-    public String getBooks(Model model, @RequestParam (required = false)List<Book> filterBook)
+    @GetMapping("/books_all")
+    public ResponseEntity<List<Book>> getBooks()
     {
-        Iterable<Book> books = bookRepository.findAll();
-        Iterable<Author> authors = authorRepository.findAll();
-        Iterable<String> genres = bookRepository.findGenres();
-        model.addAttribute("authors", authors);
-        model.addAttribute("genres", genres);
-        if (filterBook != null)
-        {
-            model.addAttribute("books", filterBook);
-            return "main";
-        }
-        model.addAttribute("books", books);
-        return "main";
+        List<Book> books = bookRepository.findAll();
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
+    @GetMapping("/authors_all")
+    public ResponseEntity<List<Author>> getAuthors()
+    {
+        List<Author> authors = authorRepository.findAll();
+        return new ResponseEntity<>(authors, HttpStatus.OK);
+    }
+
+    @GetMapping("/genres_all")
+    public ResponseEntity<List<String>> getGenres()
+    {
+        List<String> genres = bookRepository.findGenres();
+        return new ResponseEntity<>(genres, HttpStatus.OK);
+    }
+    @PostMapping("/add")
+    public ResponseEntity<Book> addBook(@RequestBody Book book)
+    {
+        Book newBook = bookRepository.save(book);
+        return new ResponseEntity<>(newBook, HttpStatus.CREATED);
     }
 
 
-
-    @PostMapping("add")
-    public String add(@RequestParam String name, @RequestParam(value = "author[]") List<String> authorNames,
-                      @RequestParam String genre)
+    @PutMapping("/edit")
+    public ResponseEntity<Book> editBook(@RequestBody Book book)
     {
-        Book book = new Book(name, genre);
-        List<Author> authors = authorRepository.findAuthorsByNameIn(authorNames);
-        book.setAuthors(authors);
-        bookRepository.save(book);
-        return "redirect:/";
+        Book editBook = bookRepository.save(book);
+        return new ResponseEntity<>(editBook, HttpStatus.CREATED);
     }
-
-    @GetMapping("filter")
-    public String filter(@RequestParam (required = false)String author,
-                         @RequestParam (required = false)String genre, Model model)
+    @PutMapping("/editAuthor")
+    public ResponseEntity<Author> editAuthor(@RequestBody Author author)
     {
-        List<Book> books;
-        List<Author> authorsNames = new ArrayList<>();
-        authorsNames.add(authorRepository.findAuthorByName(author));
-        if (author != null)
+        Author editAuthor = authorRepository.save(author);
+        return new ResponseEntity<>(editAuthor, HttpStatus.CREATED);
+    }
+    @PutMapping("/filter")
+    public ResponseEntity<List<Book>> filterBook(@RequestBody Book book)
+    {
+        List<Book> filterBook;
+        if (!book.getGenre().equals(""))
         {
-            if (genre != null)
+            if (!book.getAuthors().contains(null))
             {
-                books = bookRepository.findBooksByAuthorsInAndGenre(authorsNames, genre);
+                filterBook = bookRepository.findBooksByAuthorsInAndGenre(book.getAuthors(), book.getGenre());
             }
             else
             {
-                books = bookRepository.findBooksByAuthorsIn(authorsNames);
+                filterBook = bookRepository.findBooksByGenre(book.getGenre());
             }
         }
         else
         {
-            if (genre != null)
+            if (book.getAuthors() != null)
             {
-                books = bookRepository.findBooksByGenre(genre);
+                filterBook = bookRepository.findBooksByAuthorsIn(book.getAuthors());
             }
             else
             {
-                books = bookRepository.findAll();
+                filterBook = bookRepository.findAll();
             }
         }
-        Iterable<Author> authors = authorRepository.findAll();
-        Iterable<String> genres = bookRepository.findGenres();
-        model.addAttribute("books", books);
-        model.addAttribute("authors", authors);
-        model.addAttribute("genres", genres);
-        return "main";
+        return new ResponseEntity<>(filterBook, HttpStatus.OK);
     }
 
-    @PostMapping("edit")
-    public String edit(@RequestParam Long id, Model model)
-    {
-        Iterable<Book> books = bookRepository.findAll();
-        Book book = bookRepository.findBookById(id);
-        List<Author> authors = authorRepository.findAll();
-        List<Author>authors1 = authorRepository.findAll();
-        Iterable<String> genres = bookRepository.findGenres();
-        model.addAttribute("books", books);
-        model.addAttribute("editBook", book);
-        model.addAttribute("author", authors);
-        model.addAttribute("authors", authors1);
-        model.addAttribute("genres", genres);
-        return "main";
-    }
-
-    @PostMapping("edit1")
-    public String edit1(@RequestParam Long id, @RequestParam String name, @RequestParam(value = "author[]") List<String> authorNames,
-                      @RequestParam String genre)
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteBook(@PathVariable("id") Long id)
     {
         Book book = bookRepository.findBookById(id);
-        book.setName(name);
-        book.setGenre(genre);
-        List<Author> authors = authorRepository.findAuthorsByNameIn(authorNames);
-        book.setAuthors(authors);
-        bookRepository.save(book);
-        return "redirect:/";
+        bookRepository.delete(book);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-    @PostMapping("delete")
-    public String delete(@RequestParam Long id)
+    @DeleteMapping("/deleteAuthor/{id}")
+    public ResponseEntity<?> deleteAuthor(@PathVariable("id") Long id)
     {
-        bookRepository.delete(bookRepository.findBookById(id));
-        return "redirect:/";
+        Author author = authorRepository.findAuthorById(id);
+        authorRepository.delete(author);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

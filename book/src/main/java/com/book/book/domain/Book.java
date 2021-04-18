@@ -1,8 +1,10 @@
 package com.book.book.domain;
-import org.hibernate.annotations.Cascade;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Table;
+
 import javax.persistence.*;
-import java.util.*;
+import java.util.List;
 
 @Entity
 @Table(appliesTo = "book")
@@ -25,6 +27,7 @@ public class Book {
             joinColumns = {@JoinColumn(name="book_id", referencedColumnName="id")},
             inverseJoinColumns = {@JoinColumn(name="author_id", referencedColumnName="id")}
     )
+    @JsonIgnoreProperties("books")
     private List<Author> authors;
 
     public Book() {
