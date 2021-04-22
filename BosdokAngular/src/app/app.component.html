@@ -1,0 +1,136 @@
+<div class="header-panel">
+  <div class="topNav">
+    <a routerLink="../">Домой</a>
+    <a routerLink="../">Книги</a>
+    <a routerLink="/authors">Авторы</a>
+    <a routerLink="../">Жанр</a>
+    <a routerLink="../">Книги/авторы/жанры</a>
+    <button class="button" (click)="toggleAddBlock()">Создать книгу</button>
+    <button class="button" (click)="toggleAddAuthor()">Добавить автора</button>
+  </div>
+</div>
+<div class="container">
+  <div class="box">
+    <div class="wrapper-tb">
+      <div class="table-box">
+        <table class="main-table">
+          <tr>
+            <th>Книга</th>
+            <th>Автор</th>
+            <th>Жанр</th>
+            <th>Действие</th>
+          </tr>
+          <tr *ngFor="let book of books">
+            <td>{{book.name}}</td>
+            <td>
+              <p *ngFor="let author of book.authors">{{author.name}}</p>
+            </td>
+            <td>{{book.genre}}</td>
+            <td>
+              <button class="buttonEdit" (click)="toggleEditBlock(book)">Редактировать</button>
+              <button class="button" (click)="onDeleteBook(book.id)">Удалить</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="wrapper-fb">
+      <div class="filter-box">
+        <form #filterForm="ngForm" (ngSubmit)="onFilterBook(filterForm)">
+          <div class="text-fb">Фильтры:</div>
+          <p>
+            <label>
+              <select multiple ngModel name="authors">
+                <option [ngValue]="nullAuthor" selected="selected">-</option>
+                <option *ngFor="let author of authors" [ngValue]="author">
+                  {{author.name}}
+                </option>
+              </select>
+            </label>
+          </p>
+          <p>
+            <label>
+              <select ngModel name="genre">
+                <option selected disabled value="Жанр книги">Жанр книги</option>
+                <option *ngFor="let genre of genres" [ngValue]="genre">{{genre}}</option>
+              </select>
+            </label>
+          </p>
+          <button class="button" type="submit">Найти</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="box">
+    <div class="add-block" *ngIf="toggleAdd">
+      <div class="wrapper-tb">
+        <div>
+          <form #addForm="ngForm" (ngSubmit)="onAddBook(addForm)">
+            <div class="text-fb">Создать книгу:</div>
+            <label>
+              <input type="text" ngModel name="name" placeholder="Введите название">
+            </label>
+            <label>
+              <input type="text" ngModel name="genre" placeholder="Введите жанр">
+            </label>
+            <label>
+              <select multiple ngModel name="authors">
+                <option disabled selected>Выберите автора(-ов)</option>
+                <option *ngFor="let author of authors" [ngValue]="author">
+                  {{author.name}}
+                </option>
+              </select>
+            </label>
+            <button [disabled]="addForm.invalid" class="button" type="submit">Добавить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="edit-block" *ngIf="toggleEdit">
+      <div class="wrapper-tb">
+        <div>
+          <form #editForm="ngForm" (ngSubmit)="onEditBook(editForm)">
+            <div class="text-fb">Редактировать:</div>
+            <input type="hidden" ngModel="{{editBook?.id}}" name="id">
+            <label>
+              <input type="text" ngModel="{{editBook?.name}}" name="name" placeholder="Введите название"
+                     value="{{editBook.name}}">
+            </label>
+            <label>
+              <input type="text" ngModel="{{editBook?.genre}}" name="genre" placeholder="Введите жанр"
+                     value="{{editBook.genre}}">
+            </label>
+
+            <p>Выберите автора(-ов):</p>
+            <label>
+              <select multiple ngModel name="authors">
+                <option disabled selected>Выберите автора(-ов)</option>
+                <option *ngFor="let author of authors" [ngValue]="author">
+                  {{author.name}}
+                </option>
+              </select>
+            </label>
+            <button type="submit" class="button">Редактировать</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="filter-box" *ngIf="toggleEditAuthor">
+      <div class="wrapper-fb">
+        <form #addFormAuthor="ngForm" (ngSubmit)="onAddAuthor(addFormAuthor)">
+          <div class="text-fb">Добавить автора:</div>
+          <label>
+            <input type="text" ngModel name="name" placeholder="Введите название">
+          </label>
+          <button [disabled]="addFormAuthor.invalid" class="button" type="submit">Добавить</button>
+        </form>
+      </div>
+    </div>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

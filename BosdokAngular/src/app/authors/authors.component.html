@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="box">
+    <div class="wrapper-tb">
+      <div class="table-box">
+        <table class="main-table">
+          <tr>
+            <th>Автор</th>
+            <th>Действие</th>
+          </tr>
+          <tr *ngFor="let author of authors">
+            <td>
+              <p>{{author.name}}</p>
+            </td>
+            <td>
+              <button class="buttonEdit" (click)="toggleEditBlock(author)">Редактировать</button>
+              <button class="button" (click)="onDeleteAuthor(author.id)">Удалить</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="edit-block" *ngIf="toggleEdit">
+      <div class="wrapper-tb">
+        <div>
+          <form #editForm="ngForm" (ngSubmit)="onEditAuthor(editForm)">
+            <div class="text-fb">Редактировать:</div>
+            <input type="hidden" ngModel="{{editAuthor?.id}}" name="id">
+            <label>
+              <input type="text" ngModel="{{editAuthor?.name}}" name="name" placeholder="Введите название"
+                     value="{{editAuthor.name}}">
+            </label>
+            <button type="submit" class="button">Редактировать</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
