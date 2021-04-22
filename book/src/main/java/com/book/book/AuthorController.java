@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller("/authors")
 @CrossOrigin(origins = "http://localhost:4200")
-public class AuthorController
-{
+public class AuthorController {
     @Autowired
     private AuthorRepository authorRepository;
 
     @PostMapping("/addAuthor")
-    public ResponseEntity<Author> addAuthor(@RequestBody Author author)
-    {
+    public ResponseEntity<Author> addAuthor(@RequestBody Author author) {
         Author editAuthor = authorRepository.save(author);
         return new ResponseEntity<>(editAuthor, HttpStatus.CREATED);
     }

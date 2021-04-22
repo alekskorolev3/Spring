@@ -13,19 +13,19 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id",unique=true, nullable = false)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name="genre")
+    @Column(name = "genre")
     private String genre;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="author_book",
-            joinColumns = {@JoinColumn(name="book_id", referencedColumnName="id")},
-            inverseJoinColumns = {@JoinColumn(name="author_id", referencedColumnName="id")}
+    @JoinTable(name = "author_book",
+            joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "author_id", referencedColumnName = "id")}
     )
     @JsonIgnoreProperties("books")
     private List<Author> authors;
@@ -34,8 +34,7 @@ public class Book {
 
     }
 
-    public Book(String name, String genre)
-    {
+    public Book(String name, String genre) {
         this.name = name;
         this.genre = genre;
     }
@@ -63,7 +62,6 @@ public class Book {
     public void setGenre(String genre) {
         this.genre = genre;
     }
-
 
 
     public List<Author> getAuthors() {

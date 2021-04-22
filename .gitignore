@@ -1,0 +1,10 @@
+book/.idea/
+book/.mvn/
+book/node_modules/
+book/book.iml
+book/hs_err_pid656.log
+book/mvnw
+book/mvnw.cmd
+book/package.json
+book/package-lock.json
+book/replay_pid656.log
