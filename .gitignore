@@ -8,3 +8,10 @@ book/mvnw.cmd
 book/package.json
 book/package-lock.json
 book/replay_pid656.log
+
+BookFrontAngular/.idea/
+BookFrontAngular/e2e/
+BookFrontAngular/node_modules/
+BookFrontAngular/.browserlistrc
+BookFrontAngular/.editorconfig
+BookFrontAngular/bookAngular.iml
