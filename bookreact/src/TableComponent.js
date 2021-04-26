@@ -48,17 +48,35 @@ export default class TableComponent extends React.Component{
         else
         {
             return(
-                <ul>
-                    {items.map(item => (
-                        <li>{item.id}  
-                             {item.name}  
-                             {item.genre}
-                             {item.authors.map(author => (
-                                 <li>{author.name}</li>
-                             ))} 
-                        </li>
-                    ))}
-                </ul>
+                
+                <div className="container">
+                    <div className="box">
+                        <div className="wrapper-tb">
+                            <div className="table-box">
+                                <table className="main-table">
+                                    <tr>
+                                        <th>Книга</th>
+                                        <th>Автор</th>
+                                        <th>Жанр</th>
+                                        <th>Действие</th>
+                                    </tr>
+                                    {items.map((item) =>
+                                    (
+                                        <tr>
+                                            <td>{item.name}</td>
+                                            <td>{item.authors.map((author) =>
+                                            {
+                                                <p>{author.name}</p>
+                                            })}</td>
+                                            <td>{item.genre}</td>
+                                            <td>In progress</td>
+                                        </tr>
+                                    ))}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             )
         }
     }
