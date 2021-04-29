@@ -8,30 +8,12 @@ export default class AddBlock extends React.Component{
             name: '',
             genre: '',
             authors: [],
-            authorsName : []
+            authorsPost: [{
+                id: 1,
+                name: 'Александр Солженицын'
+            }]
         };
         this.handleChange = this.handleChange.bind(this);
-    }
-    handleChange(event)
-    {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        const options = target.options;
-        const authorIdValue = target.authorIdValue;
-        const authorNameValue = target.authorNameValue;
-        var authorsValue = [];
-        for (var i = 0, l = options.length; i < l; i++)
-        {
-            if (options[i].selected)
-            {
-                authorsValue.push(options[i].authorIdValue);
-            }
-        }
-        this.setState({
-            [name] : value,
-            authorsName : authorsValue
-        });
     }
     async postBook()
     {
@@ -46,15 +28,13 @@ export default class AddBlock extends React.Component{
                 body: JSON.stringify({
                     name: this.state.name,
                     genre: this.state.genre,
-                    authors: this.state.authorsName
+                    authors: this.state.authorsPost
                 })
             });
-            console.log('Result: ' + result);
         } catch(e)
         {
             console.log(e)
         }
-
     }
     componentDidMount()
     {
@@ -68,10 +48,34 @@ export default class AddBlock extends React.Component{
                         authors: result
                     }
                 );
-                console.log(result);
             }
         )
     }
+    handleChange = (event) =>
+    {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        this.setState({
+            [name] : value,
+        });
+    }
+    handleSelectChange = (event) =>
+    {
+        const target = event.target;
+        const name = target.name;
+        const options = target.selectedOptions;
+        let authors = [];
+        for (var i = 0, l = options.length; i < l; i++) 
+        {
+            authors.push({id: options[i].value, name: options[i].value});
+        }
+        //let authors = Array.from(target.selectedOptions, option => option.value);
+        this.setState({
+            [name]: authors
+        });
+    }
+    
     render()
     {
         const{authors} = this.state;
@@ -97,12 +101,10 @@ export default class AddBlock extends React.Component{
                                                 onChange={this.handleChange}/>
                                             </label>
                                             <label>
-                                                <select multiple = {true} name="authorsName"
-                                                onChange={this.handleChange}
-                                                value={authors}>
+                                                <select multiple = {true} name="authorsPost"
+                                                onChange={this.handleSelectChange}>
                                                     {authors.map((author) => (
-                                                        <option authorIdValue={author.id}
-                                                                authorNameValue={author.name}>
+                                                        <option value = {author.id}>
                                                             {author.name}
                                                         </option>
                                                     ))}
