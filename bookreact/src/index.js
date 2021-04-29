@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import TableComponent from './TableComponent.js';
-
+import App from './App.js';
 
 ReactDOM.render(
-  <TableComponent />,
+  <App />,
   document.getElementById('root')
 );
 

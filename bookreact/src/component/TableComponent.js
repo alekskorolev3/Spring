@@ -10,6 +10,7 @@ export default class TableComponent extends React.Component{
             items: []
         };
     }
+    
     componentDidMount()
     {
         fetch("http://localhost:8080/books_all")
@@ -65,11 +66,11 @@ export default class TableComponent extends React.Component{
                                         <tr>
                                             <td>{item.name}</td>
                                             <td>{item.authors.map((author) =>
-                                            {
+                                            (
                                                 <p>{author.name}</p>
-                                            })}</td>
+                                            ))}</td>
                                             <td>{item.genre}</td>
-                                            <td>In progress</td>
+                                            <td><button className="button">Редакт./Удалить</button></td>
                                         </tr>
                                     ))}
                                 </table>
