@@ -1,5 +1,6 @@
 import React from 'react';
-
+import EditBlock from './EditBlock.js';
+import FilterBlock from './FilterBlock.js';
 export default class TableComponent extends React.Component{
     constructor(props)
     {
@@ -7,8 +8,14 @@ export default class TableComponent extends React.Component{
         this.state = {
             error: null,
             isLoaded: false,
-            items: []
+            isShow: false,
+            items: [],
+            _id: 0,
+            _name: '',
+            _genre: '',
+            authors: []
         };
+        this.handleClick = this.handleClick.bind(this);
     }
     
     componentDidMount()
@@ -34,10 +41,25 @@ export default class TableComponent extends React.Component{
             }
         )
     }
-
+    handleClick = (event) =>
+    {
+        let book = {
+            id: 0,
+            name: '',
+            genre: ''
+        };
+        book = JSON.parse(event.target.value);
+        this.setState({
+            isShow : !this.state.isShow,
+            _id : book.id,
+            _name: book.name,
+            _genre: book.genre
+        });
+        
+    }
     render()
     {
-        const{error, isLoaded, items} = this.state;
+        const{error, isLoaded, items, isShow, _id, _name, _genre} = this.state;
         if (error)
         {
             return <p>Error {error.message}</p>
@@ -46,7 +68,7 @@ export default class TableComponent extends React.Component{
         {
             return <p>Loading...</p>
         }
-        else
+        else 
         {
             return(
                 
@@ -70,15 +92,19 @@ export default class TableComponent extends React.Component{
                                                 <p>{author.name}</p>
                                             ))}</td>
                                             <td>{item.genre}</td>
-                                            <td><button className="button">Редакт./Удалить</button></td>
+                                            <td><button className="button" onClick={this.handleClick} 
+                                                value = {JSON.stringify(item)}>Редакт./Удалить</button></td>
                                         </tr>
                                     ))}
                                 </table>
                             </div>
                         </div>
+                        <FilterBlock />
                     </div>
+                    <EditBlock isShow={isShow} id={_id} name={_name} genre={_genre}/>
                 </div>
             )
         }
+
     }
 }

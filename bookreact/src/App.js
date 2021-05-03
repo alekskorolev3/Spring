@@ -2,19 +2,18 @@ import React from 'react';
 import TableComponent from './component/TableComponent.js';
 import NavBar from './component/NavBar.js';
 import AddBlock from './component/AddBlock.js';
-import EditBlock from './component/EditBlock.js';
-
+import AddAuthorBlock from './component/AddAuthorBlock.js';
 class App extends React.Component {
     constructor(props)
     {
         super(props);
         this.handleAddChange = this.handleAddChange.bind(this);
-        this.handleEditChange = this.handleEditChange.bind(this);
+        this.handleAddAuthorChange = this.handleAddAuthorChange.bind(this);
         this.state = {
             items: [],
             isLoaded: false,
             isShowAddBlock: false,
-            isShowEditBlock: false
+            isShowAddAuthorBlock: false
         }
     }
     handleAddChange()
@@ -25,11 +24,11 @@ class App extends React.Component {
             }
         );
     }
-    handleEditChange()
+    handleAddAuthorChange()
     {
         this.setState(
             {
-                isShowEditBlock: !this.state.isShowEditBlock
+                isShowAddAuthorBlock: !this.state.isShowAddAuthorBlock
             }
         );
     }
@@ -39,10 +38,10 @@ class App extends React.Component {
             <div>
                 <NavBar/>
                 <button className="button" onClick={this.handleAddChange}>Создать книгу</button>
-                <button className="button" onClick={this.handleEditChange}>Редактировать книгу</button>
+                <button className="button" onClick={this.handleAddAuthorChange}>Добавить автора</button>
                 <TableComponent />
                 <AddBlock isShow = {this.state.isShowAddBlock}/>
-                <EditBlock isShow = {this.state.isShowEditBlock}/>
+                <AddAuthorBlock isShow = {this.state.isShowAddAuthorBlock} />
             </div>
         );
     }

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Controller("/authors")
-@CrossOrigin(origins = "http://localhost:4200")
+@Controller
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthorController {
     @Autowired
     private AuthorRepository authorRepository;

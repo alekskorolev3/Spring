@@ -58,7 +58,7 @@ public class MainController {
         return new ResponseEntity<>(editAuthor, HttpStatus.CREATED);
     }
 
-    @PutMapping("/filter")
+    @PostMapping("/filter")
     public ResponseEntity<List<Book>> filterBook(@RequestBody Book book) {
         List<Book> filterBook;
         if (!book.getGenre().equals("")) {

@@ -70,7 +70,6 @@ export default class AddBlock extends React.Component{
         {
             authors.push({id: options[i].value, name: options[i].value});
         }
-        //let authors = Array.from(target.selectedOptions, option => option.value);
         this.setState({
             [name]: authors
         });
@@ -93,7 +92,7 @@ export default class AddBlock extends React.Component{
                                             <label>
                                                 <input type="text" name="name" 
                                                 placeholder="Введите название" 
-                                                onChange={this.handleChange}/>
+                                                onSubmit={this.handleChange}/>
                                             </label>
                                             <label>
                                                 <input type="text" name="genre" 
