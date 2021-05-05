@@ -37,8 +37,12 @@ class App extends React.Component {
         return (
             <div>
                 <NavBar/>
-                <button className="button" onClick={this.handleAddChange}>Создать книгу</button>
-                <button className="button" onClick={this.handleAddAuthorChange}>Добавить автора</button>
+                <div style={{display: 'flex'}}>
+                    <button
+                    onClick={this.handleAddChange}>Создать книгу</button>
+                    <button className="button" 
+                    onClick={this.handleAddAuthorChange}>Добавить автора</button>
+                </div>
                 <TableComponent />
                 <AddBlock isShow = {this.state.isShowAddBlock}/>
                 <AddAuthorBlock isShow = {this.state.isShowAddAuthorBlock} />

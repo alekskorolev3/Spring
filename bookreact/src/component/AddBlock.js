@@ -14,6 +14,7 @@ export default class AddBlock extends React.Component{
             }]
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleSelectChange = this.handleSelectChange.bind(this);
     }
     async postBook()
     {
@@ -31,6 +32,7 @@ export default class AddBlock extends React.Component{
                     authors: this.state.authorsPost
                 })
             });
+            alert(this.state.name);
         } catch(e)
         {
             console.log(e)
@@ -59,6 +61,7 @@ export default class AddBlock extends React.Component{
         this.setState({
             [name] : value,
         });
+        event.preventDefault();
     }
     handleSelectChange = (event) =>
     {
@@ -92,7 +95,7 @@ export default class AddBlock extends React.Component{
                                             <label>
                                                 <input type="text" name="name" 
                                                 placeholder="Введите название" 
-                                                onSubmit={this.handleChange}/>
+                                                onChange={this.handleChange}/>
                                             </label>
                                             <label>
                                                 <input type="text" name="genre" 

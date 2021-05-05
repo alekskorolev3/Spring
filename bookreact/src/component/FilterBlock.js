@@ -9,7 +9,8 @@ export default class FilterBlock extends React.Component{
             authorsPost: [{
                 id: 0
             }],
-            genrePost: ''
+            genrePost: '',
+            isFilter: false
         }
 
     }
@@ -66,10 +67,9 @@ export default class FilterBlock extends React.Component{
             authorsPost: authors
         });
     }
-    async fiterBook()
+    async filterBook()
     {
         try {
-
             let result = await fetch('http://localhost:8080/filter', {
                 method: 'post',
                 headers: {
@@ -81,6 +81,8 @@ export default class FilterBlock extends React.Component{
                     authors: this.state.authorsPost
                 })
             });
+            let data = await result.json();
+            alert(data);
         } catch(e)
         {
             console.log(e)
@@ -97,7 +99,7 @@ export default class FilterBlock extends React.Component{
                     <p>
                         <label>
                         <select multiple = {true} name="authors"
-                        onChange = {this.handleChange}>
+                        onChange = {this.handleSelectChange}>
                             {authors.map((author) => (
                                 <option value = {author.id}>{author.name}</option>
                             ))}
